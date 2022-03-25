@@ -1,5 +1,7 @@
 package fraction;
 
+import static java.lang.Math.max;
+
 public class FractionImpl implements Fraction {
     /**
      * Parameters are the <em>numerator</em> and the <em>denominator</em>.
@@ -12,8 +14,12 @@ public class FractionImpl implements Fraction {
      * @param numerator
      * @param denominator
      */
-    public FractionImpl(int numerator, int denominator) {
-        // TODO
+    int numerator;
+    int denominator;
+
+    public FractionImpl(int numerator, int denominator)
+    {
+        this(numerator+"/"+denominator);
     }
 
     /**
@@ -22,7 +28,7 @@ public class FractionImpl implements Fraction {
      * @param wholeNumber representing the numerator
      */
     public FractionImpl(int wholeNumber) {
-        // TODO
+        this(Integer.toString(wholeNumber));
     }
 
     /**
@@ -37,7 +43,23 @@ public class FractionImpl implements Fraction {
      * @param fraction the string representation of the fraction
      */
     public FractionImpl(String fraction) {
-        // TODO
+        if (fraction.contains("/"))
+        {
+            String[] arr = new String[2];
+            arr = fraction.split("/");
+            int numerator = Integer.parseInt(arr[0].trim());
+            int denominator = Integer.parseInt(arr[1].trim());
+            if (denominator==0) throw new ArithmeticException("Divide by zero");
+            int gcd = FractionImpl.gcd(Math.abs(numerator),Math.abs(denominator));
+            boolean is_positive = FractionImpl.isPositive(numerator,denominator);
+            this.numerator = (is_positive) ? (Math.abs(numerator)/gcd):(-Math.abs(numerator)/gcd);
+            this.denominator = Math.abs(denominator)/gcd;
+        }
+        else
+        {
+            this.numerator = Integer.parseInt(fraction.trim());
+            this.denominator = 1;
+        }
     }
 
     /**
@@ -132,7 +154,26 @@ public class FractionImpl implements Fraction {
      * @inheritDoc
      */
     @Override
-    public String toString() {
-        return null;
+    public String toString()
+    {
+        if (this.denominator==1) return Integer.toString(this.numerator);
+        else return Integer.toString(this.numerator)+"/"+Integer.toString(this.denominator);
+    }
+
+    private static int gcd(int numerator, int denominator)
+    {
+        while (numerator > 0 && denominator > 0)
+        {
+            if (numerator >= denominator)
+                numerator = numerator % denominator;
+            else denominator = denominator % numerator;
+        }
+        return max(numerator,denominator);
+    }
+
+    private static boolean isPositive(int numerator, int denominator)
+    {
+        if (numerator*denominator>=0) return true;
+        else return false;
     }
 }
