@@ -67,7 +67,10 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction add(Fraction f) {
-        return null;
+        FractionImpl g = new FractionImpl(f.toString());
+        int denominator = this.denominator * g.denominator;
+        int numerator = this.numerator*g.denominator + g.numerator*this.denominator;
+        return new FractionImpl(numerator,denominator);
     }
 
     /**
@@ -75,7 +78,8 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction subtract(Fraction f) {
-        return null;
+        FractionImpl g = new FractionImpl(f.toString());
+        return this.add(g.negate());
     }
 
     /**
@@ -83,7 +87,9 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction multiply(Fraction f) {
-        return null;
+        FractionImpl g = new FractionImpl(f.toString());
+        return new FractionImpl(this.numerator*g.numerator,
+                this.denominator*g.denominator);
     }
 
     /**
@@ -91,7 +97,8 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction divide(Fraction f) {
-        return null;
+        FractionImpl g = new FractionImpl(f.toString());
+        return this.multiply(g.inverse());
     }
 
     /**
@@ -99,7 +106,7 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction abs() {
-        return null;
+        return new FractionImpl(Math.abs(this.numerator),this.denominator);
     }
 
     /**
@@ -107,7 +114,7 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction negate() {
-        return null;
+        return new FractionImpl(-this.numerator,this.denominator);
     }
 
     /**
@@ -123,7 +130,12 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if (!(obj instanceof Fraction)) return false;
+        else
+        {
+            Fraction f = (Fraction) obj;
+            return this.subtract(f).toString().equals("0");
+        }
     }
 
     /**
@@ -139,7 +151,7 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public Fraction inverse() {
-        return null;
+        return new FractionImpl(this.denominator,this.numerator);
     }
 
     /**
@@ -147,7 +159,8 @@ public class FractionImpl implements Fraction {
      */
     @Override
     public int compareTo(Fraction o) {
-        return 0;
+        FractionImpl sub = new FractionImpl(this.subtract(o).toString());
+        return sub.numerator;
     }
 
     /**
