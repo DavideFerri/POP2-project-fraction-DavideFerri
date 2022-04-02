@@ -1,3 +1,6 @@
+// 13808681
+// davide.ferri.94@gmail.com
+
 package fraction;
 
 import static java.lang.Math.max;
@@ -14,10 +17,10 @@ public class FractionImpl implements Fraction {
      * @param numerator
      * @param denominator
      */
-    int numerator;
-    int denominator;
+    private final int numerator;
+    private final int denominator;
 
-    public FractionImpl(int numerator, int denominator)
+    public FractionImpl(int numerator, int denominator) throws ArithmeticException
     {
         this(numerator+"/"+denominator);
     }
@@ -42,24 +45,34 @@ public class FractionImpl implements Fraction {
      *
      * @param fraction the string representation of the fraction
      */
-    public FractionImpl(String fraction) {
-        if (fraction.contains("/"))
+    public FractionImpl(String fraction) throws ArithmeticException,NumberFormatException
+    {
+        int num;
+        int den;
+        try
         {
-            String[] arr = new String[2];
-            arr = fraction.split("/");
-            int numerator = Integer.parseInt(arr[0].trim());
-            int denominator = Integer.parseInt(arr[1].trim());
-            if (denominator==0) throw new ArithmeticException("Divide by zero");
-            int gcd = FractionImpl.gcd(Math.abs(numerator),Math.abs(denominator));
-            boolean is_positive = FractionImpl.isPositive(numerator,denominator);
-            this.numerator = (is_positive) ? (Math.abs(numerator)/gcd):(-Math.abs(numerator)/gcd);
-            this.denominator = Math.abs(denominator)/gcd;
+            if (fraction.contains("/"))
+            {
+                String[] arr = fraction.split("/");
+                if (arr.length != 2) throw new NumberFormatException("Incorrect string format");
+                num = Integer.parseInt(arr[0].trim());
+                den = Integer.parseInt(arr[1].trim());
+            }
+            else
+            {
+                num = Integer.parseInt(fraction.trim());
+                den = 1;
+            }
         }
-        else
+        catch(NumberFormatException e)
         {
-            this.numerator = Integer.parseInt(fraction.trim());
-            this.denominator = 1;
+            throw e;
         }
+        if (den==0) throw new ArithmeticException("Divide by zero");
+        int gcd = FractionImpl.gcd(Math.abs(num),Math.abs(den));
+        boolean is_positive = FractionImpl.isPositive(num,den);
+        this.numerator = (is_positive) ? (Math.abs(num)/gcd):(-Math.abs(num)/gcd);
+        this.denominator = Math.abs(den)/gcd;
     }
 
     /**
