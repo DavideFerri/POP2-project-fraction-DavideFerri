@@ -9,7 +9,7 @@ import org.testng.Assert;
 class FractionImplTest {
 
     @org.junit.jupiter.api.Test
-    void add() {
+    void testAdd() {
         // test one
         Fraction fr1 = new FractionImpl(5,3);
         Fraction fr2 = new FractionImpl(8,3);
@@ -38,7 +38,7 @@ class FractionImplTest {
     }
 
     @org.junit.jupiter.api.Test
-    void subtract() {
+    void testSubtract() {
         // test one
         Fraction fr1 = new FractionImpl(5,3);
         Fraction fr2 = new FractionImpl(8,3);
@@ -67,7 +67,7 @@ class FractionImplTest {
     }
 
     @org.junit.jupiter.api.Test
-    void multiply() {
+    void testMultiply() {
         // test one
         Fraction fr1 = new FractionImpl(5,3);
         Fraction fr2 = new FractionImpl(8,3);
@@ -96,7 +96,7 @@ class FractionImplTest {
     }
 
     @org.junit.jupiter.api.Test
-    void divide() {
+    void testDivide() {
         // test one
         Fraction fr1 = new FractionImpl(5,3);
         Fraction fr2 = new FractionImpl(8,3);
@@ -125,13 +125,11 @@ class FractionImplTest {
         // test six
         Fraction fr16 = new FractionImpl("2/5");
         Fraction fr17 = new FractionImpl("0/7");
-        Assertions.assertThrows(ArithmeticException.class, () -> {
-            fr16.divide(fr17);
-        });
+        Assertions.assertThrows(ArithmeticException.class, () -> fr16.divide(fr17));
     }
 
     @org.junit.jupiter.api.Test
-    void abs() {
+    void testAbs() {
         // test one
         Fraction fr1 = new FractionImpl("22/   -2");
         Assert.assertEquals(fr1.abs().toString(),"11");
@@ -150,7 +148,7 @@ class FractionImplTest {
     }
 
     @org.junit.jupiter.api.Test
-    void negate() {
+    void testNegate() {
         // test one
         Fraction fr1 = new FractionImpl("22/   -2");
         Assert.assertEquals(fr1.negate().toString(),"11");
@@ -201,7 +199,7 @@ class FractionImplTest {
     }
 
     @org.junit.jupiter.api.Test
-    void inverse() {
+    void testInverse() {
         // test one
         Fraction fr1 = new FractionImpl("22/   -2");
         Assert.assertEquals(fr1.inverse().toString(),"-1/11");
@@ -223,7 +221,7 @@ class FractionImplTest {
     }
 
     @org.junit.jupiter.api.Test
-    void compareTo() {
+    void testCompareTo() {
         // test one
         Fraction fr1 = new FractionImpl(5,3);
         Fraction fr2 = new FractionImpl(8,3);
@@ -290,32 +288,18 @@ class FractionImplTest {
     void testConstructor()
     {
         // test one
-        Assertions.assertThrows(ArithmeticException.class, () -> {
-            new FractionImpl(15,0);
-        });
+        Assertions.assertThrows(ArithmeticException.class, () -> new FractionImpl(15,0));
         // test two
-        Assertions.assertThrows(NumberFormatException.class, () -> {
-            new FractionImpl("2/3/4");
-        });
+        Assertions.assertThrows(NumberFormatException.class, () -> new FractionImpl("2/3/4"));
         // test three
-        Assertions.assertThrows(ArithmeticException.class, () -> {
-            new FractionImpl("3/0");
-        });
+        Assertions.assertThrows(ArithmeticException.class, () -> new FractionImpl("3/0"));
         // test four
-        Assertions.assertThrows(ArithmeticException.class, () -> {
-            new FractionImpl(0,0);
-        });
+        Assertions.assertThrows(ArithmeticException.class, () -> new FractionImpl(0,0));
         // test five
-        Assertions.assertThrows(NumberFormatException.class, () -> {
-            new FractionImpl("1 0 / -4");
-        });
+        Assertions.assertThrows(NumberFormatException.class, () -> new FractionImpl("1 0 / -4"));
         // test six
-        Assertions.assertThrows(NumberFormatException.class, () -> {
-            new FractionImpl("10 / +-4");
-        });
+        Assertions.assertThrows(NumberFormatException.class, () -> new FractionImpl("10 / +-4"));
         // test seven
-        Assertions.assertThrows(NumberFormatException.class, () -> {
-            new FractionImpl("!10 / 4");
-        });
+        Assertions.assertThrows(NumberFormatException.class, () -> new FractionImpl("!10 / 4"));
     }
 }
